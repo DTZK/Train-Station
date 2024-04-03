@@ -1,0 +1,38 @@
+{% include 'top.html' %}
+<div class="content">
+    <div class="container details">
+
+        <h1 class="title">Add Stations</h1>
+
+        {% if session['isadmin'] %}
+            <form class="Add" method="POST" action="{{url_for('add_stations')}}">
+
+                <label for="stationname">Station Name:</label>
+                <input type="text" id="stationname" name="stationname" value="New" placeholder="Enter station name here">
+
+                <label for="latitude">Latitude:</label>
+                <input type="text" id="latitude" name="latitude" placeholder="Enter latitude here">
+
+                <label for="longitude">Longitude:</label>
+                <input type="text" id="longitude" name="longitude" placeholder="Enter longitude here">
+                <br/>
+                <select id="stationtypeid" name="stationtypeid">
+                    {% for item in stationtypeid %}
+                        <option value="{{item['stationtypeid']}}" >{{item['stationtypeid']}} </option>
+                    {% endfor %}
+                </select>
+                <br/>
+                <button class="pure-button pure-button-primary" type="submit">Add</button>
+                <br/>
+                <hr/>
+                <hr/>
+                <hr/>
+            </form>
+        {% else %}
+            <p>Only administrators can add stations.</p>
+        {% endif %}
+        
+    </div>
+</div>
+</body>
+</html>

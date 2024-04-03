@@ -1,0 +1,26 @@
+{% include 'top.html' %}
+    
+<div id="content">
+    <h1 class="page-title">Station statistics</h1>
+    <br/>
+    <table class="pure-table">
+        <thead>
+            <tr>
+                <th> id </th>
+                <th> name </th>
+                <th> count </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in stations %}
+            <tr>
+                <td> {{item['stationid']}}</td>
+                <td> {{item['stationtypeid']}}</td>
+                <td> {{item['count']}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

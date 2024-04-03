@@ -1,0 +1,64 @@
+{% include 'top.html' %}
+
+<div id="content">
+    <h1 class="page-title">Details of Stations (consolidated)</h1>
+    {% if session['isadmin'] == True %}
+        <div style="float: left;">
+            <button class="pure-button"><a href="{{ url_for('add_stations') }}" class="pure-menu-link">Add Station</a></button>
+        </div>            
+    {% endif %}
+    <br/>
+    <table class="pure-table">
+        <thead>
+            <tr>
+                {% if session['isadmin'] == True %}
+                    <th>Delete</th>
+                    <th>Station ID</th>
+                    <th>Station Name</th>
+                    <th>Station Type ID</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Update</th>
+                {% else %}
+                    <th>Station ID</th>
+                    <th>Station Name</th>
+                    <th>Station Type ID</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in stations %}
+                <tr>
+                    {% if session['isadmin'] == True %}
+                        <td> 
+                            {% if item['isadmin'] == True %}
+                                <button disabled class="pure-button" onclick="alert('Even an Admin should not delete an admin')"><a aria-disabled="true" class="pure-menu-link">Delete</a></button>
+                            {% else %}
+                                <button class="pure-button"><a disabled href="{{ url_for('delete_station', stationid=item.stationid) }}" class="pure-menu-link">Delete</a></button>
+                            {% endif %}
+                        </td>
+                        <form name="{{item['stationid']}}_form" class="Update" method="POST" action="{{url_for('update_station')}}">
+                            <input type="hidden" id="stationid" name="stationid" value="{{item['stationid']}}" />
+                            <td>{{item['stationid']}}</td>
+                            <td><input type="text" id="stationname" name="stationname" value="{{item['stationname']}}" placeholder="{{item['stationname']}}"></td>
+                            <td><input type="number" id="stationtypeid" name="stationtypeid" value="{{item['stationtypeid']}}" placeholder="{{item['stationtypeid']}}"></td>
+                            <td><input type="text" id="latitude" name="latitude" value="{{item['latitude']}}" placeholder="{{item['latitude']}}"></td>
+                            <td><input type="text" id="longitude" name="longitude" value="{{item['longitude']}}" placeholder="{{item['longitude']}}"></td>
+                            <td><button class="pure-button pure-button-primary" type="submit">Update</button></td>
+                        </form>
+                    {% else %}
+                        <td>{{item['stationid']}}</td>
+                        <td>{{item['stationname']}}</td>
+                        <td>{{item['stationtypeid']}}</td>
+                        <td>{{item['latitude']}}</td>
+                        <td>{{item['longitude']}}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
